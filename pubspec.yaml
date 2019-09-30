@@ -1,0 +1,23 @@
+name: custom_permission
+description: Permission plugin for Flutter. This plugin provides a cross-platform (iOS, Android) API to request and check permissions.
+version: 1.0.0
+authors:
+  - minhvn <minhvo.me@gmail.com>
+  - Baseflow <hello@baseflow.com>
+  - long1eu <home@long1.eu>
+  - Sebastian Roth <sebastian.roth@gmail.com>
+homepage: https://github.com/minhvn/flutter-custom-permission
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  meta: ^1.1.6
+
+flutter:
+  plugin:
+    androidPackage: com.minhvn.CustomPermission
+    pluginClass: CustomPermissionPlugin
