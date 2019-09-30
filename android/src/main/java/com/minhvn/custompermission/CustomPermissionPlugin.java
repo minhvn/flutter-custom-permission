@@ -1,4 +1,4 @@
-package app.minhvn.custompermission;
+package com.minhvn.custompermission;
 
 import android.Manifest;
 import android.annotation.SuppressLint;

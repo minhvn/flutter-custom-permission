@@ -1,4 +1,4 @@
-group 'com.baseflow.CustomPermission'
+group 'com.minhvn.CustomPermission'
 version '1.0-SNAPSHOT'
 
 buildscript {
