@@ -41,26 +41,19 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
 public class CustomPermissionPlugin implements MethodCallHandler {
   private static final String LOG_TAG = "custom_permission";
   private static final int PERMISSION_CODE = 24;
-  private static final int PERMISSION_CODE_IGNORE_BATTERY_OPTIMIZATIONS = 5672353;
 
   //PERMISSION_GROUP
   private static final int PERMISSION_GROUP_CALENDAR = 0;
   private static final int PERMISSION_GROUP_CAMERA = 1;
-  private static final int PERMISSION_GROUP_CONTACTS = 2;
-  private static final int PERMISSION_GROUP_LOCATION = 3;
-  private static final int PERMISSION_GROUP_LOCATION_ALWAYS = 4;
-  private static final int PERMISSION_GROUP_LOCATION_WHEN_IN_USE = 5;
-  private static final int PERMISSION_GROUP_MEDIA_LIBRARY = 6;
-  private static final int PERMISSION_GROUP_MICROPHONE = 7;
-  private static final int PERMISSION_GROUP_PHONE = 8;
-  private static final int PERMISSION_GROUP_PHOTOS = 9;
-  private static final int PERMISSION_GROUP_REMINDERS = 10;
-  private static final int PERMISSION_GROUP_SENSORS = 11;
-  private static final int PERMISSION_GROUP_SMS = 12;
-  private static final int PERMISSION_GROUP_SPEECH = 13;
-  private static final int PERMISSION_GROUP_STORAGE = 14;
-  private static final int PERMISSION_GROUP_IGNORE_BATTERY_OPTIMIZATIONS = 15;
-  private static final int PERMISSION_GROUP_UNKNOWN = 16;
+  private static final int PERMISSION_GROUP_LOCATION = 2;
+  private static final int PERMISSION_GROUP_LOCATION_ALWAYS = 3;
+  private static final int PERMISSION_GROUP_LOCATION_WHEN_IN_USE = 4;
+  private static final int PERMISSION_GROUP_MEDIA_LIBRARY = 5;
+  private static final int PERMISSION_GROUP_PHONE = 6;
+  private static final int PERMISSION_GROUP_PHOTOS = 7;
+  private static final int PERMISSION_GROUP_REMINDERS = 8;
+  private static final int PERMISSION_GROUP_STORAGE = 9;
+  private static final int PERMISSION_GROUP_UNKNOWN = 10;
 
   private CustomPermissionPlugin(Registrar mRegistrar) {
     this.mRegistrar = mRegistrar;
@@ -154,8 +147,6 @@ public class CustomPermissionPlugin implements MethodCallHandler {
       case Manifest.permission.ACCESS_COARSE_LOCATION:
       case Manifest.permission.ACCESS_FINE_LOCATION:
         return PERMISSION_GROUP_LOCATION;
-      case Manifest.permission.RECORD_AUDIO:
-        return PERMISSION_GROUP_MICROPHONE;
       case Manifest.permission.READ_PHONE_STATE:
       case Manifest.permission.CALL_PHONE:
       case Manifest.permission.READ_CALL_LOG:
@@ -250,20 +241,6 @@ public class CustomPermissionPlugin implements MethodCallHandler {
     for (String name : names) {
       // Only handle them if the client app actually targets a API level greater than M.
       if (targetsMOrHigher) {
-        if (permission == PERMISSION_GROUP_IGNORE_BATTERY_OPTIMIZATIONS) {
-          String packageName = context.getPackageName();
-          PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-          // PowerManager.isIgnoringBatteryOptimizations has been included in Android M first.
-          if (VERSION.SDK_INT >= VERSION_CODES.M) {
-            if (pm.isIgnoringBatteryOptimizations(packageName)) {
-              return PERMISSION_STATUS_GRANTED;
-            } else {
-              return PERMISSION_STATUS_DENIED;
-            }
-          } else {
-            return PERMISSION_STATUS_RESTRICTED;
-          }
-        }
         final int permissionStatus = ContextCompat.checkSelfPermission(context, name);
         if (permissionStatus == PackageManager.PERMISSION_DENIED) {
           return PERMISSION_STATUS_DENIED;
@@ -323,9 +300,6 @@ public class CustomPermissionPlugin implements MethodCallHandler {
       return SERVICE_STATUS_ENABLED;
     }
 
-    if (permission == PERMISSION_GROUP_IGNORE_BATTERY_OPTIMIZATIONS) {
-      return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? SERVICE_STATUS_ENABLED : SERVICE_STATUS_NOT_APPLICABLE;
-    }
 
     return SERVICE_STATUS_NOT_APPLICABLE;
   }

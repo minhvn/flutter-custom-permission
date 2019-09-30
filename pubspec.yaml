@@ -19,5 +19,5 @@ dependencies:
 
 flutter:
   plugin:
-    androidPackage: com.minhvn.CustomPermission
+    androidPackage: com.minhvn.custompermission
     pluginClass: CustomPermissionPlugin
